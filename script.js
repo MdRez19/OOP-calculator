@@ -8,6 +8,59 @@ class Calculator {
         this.userInputOperator = ''
     }
 
+    numberBtnPressed(){
+        for (let i = 0; i < numberButtons.length; i++) {
+            numberButtons[i].addEventListener("click", event => {
+                this.userInputNumber = event.target.value
+                this.numberHolder += this.userInputNumber
+                displayTwo.innerText = this.numberHolder;
+                if (this.operatorHolder === ''){
+                    this.firstNumber = Number(this.numberHolder)
+                } else {
+                    this.secondNumber = Number(this.numberHolder)
+                }
+            })
+        }
+    }
+
+    operatorBtnPressed(){
+        for (let i = 0; i < operationButtons.length; i++) {
+            operationButtons[i].addEventListener("click", event => {
+                this.userInputOperator = event.target.value;
+                if (this.operatorHolder === ''){
+                    displayOne.innerText = this.firstNumber
+                } else if(this.secondNumber !== null) {
+                    this.firstNumber = this.calculation()
+                    displayOne.innerText = this.firstNumber
+                    this.secondNumber = null
+                }
+                this.operatorHolder = this.userInputOperator
+                displayTwo.innerText = ''
+                this.numberHolder = ''
+            })
+        }
+    }
+
+    equalBtnPressed(){
+        equalsButton.addEventListener("click", () => {
+            this.firstNumber = this.calculation()
+            displayOne.innerText = this.firstNumber
+            displayTwo.innerText = ''
+            this.secondNumber = null
+        });
+    }
+
+    clearBtnPressed(){
+        clearButton.addEventListener("click", () => {
+            this.firstNumber = null;
+            this.secondNumber = null;
+            this.numberHolder = '';
+            this.operatorHolder = '';
+            displayOne.innerText = ''
+            displayTwo.innerText = ''
+        });
+    }
+
     add(){
         return this.firstNumber + this.secondNumber
     }
@@ -23,6 +76,7 @@ class Calculator {
     divide(){
         return this.firstNumber / this.secondNumber
     }
+
 
     calculation(){
         if (this.operatorHolder === '+'){
@@ -49,60 +103,7 @@ const displayOne = document.querySelector(".display-one");
 const displayTwo = document.querySelector(".display-two");
 const clearButton = document.querySelector(".clear");
 
-
-
-//
-// // 2. add click event...
-for (let i = 0; i < numberButtons.length; i++) {
-    numberButtons[i].addEventListener("click", numberBtnPressed)
-}
-
-for (let i = 0; i < operationButtons.length; i++) {
-    operationButtons[i].addEventListener("click", operatorBtnPressed)
-}
-
-equalsButton.addEventListener("click", equalBtnPressed);
-clearButton.addEventListener("click", clearBtnPressed);
-
-function numberBtnPressed(event){
-    calculator.userInputNumber = event.target.value
-    calculator.numberHolder += calculator.userInputNumber
-    displayTwo.innerText = calculator.numberHolder;
-    if (calculator.operatorHolder === ''){
-        calculator.firstNumber = Number(calculator.numberHolder)
-    } else {
-        calculator.secondNumber = Number(calculator.numberHolder)
-    }
-}
-
-function operatorBtnPressed(event){
-    calculator.userInputOperator = event.target.value;
-    if (calculator.operatorHolder === ''){
-        displayOne.innerText = calculator.firstNumber
-    } else if(calculator.secondNumber !== null) {
-        calculator.firstNumber = calculator.calculation()
-        displayOne.innerText = calculator.firstNumber
-        calculator.secondNumber = null
-    }
-    calculator.operatorHolder = calculator.userInputOperator
-    displayTwo.innerText = ''
-    calculator.numberHolder = ''
-}
-
-// when the use presses equal. You must show the result
-function equalBtnPressed() {
-    calculator.firstNumber = calculator.calculation()
-    displayOne.innerText = calculator.firstNumber
-    displayTwo.innerText = ''
-    calculator.secondNumber = null
-}
-
-// clear values of all the variables...
-function clearBtnPressed(){
-    calculator.firstNumber = null;
-    calculator.secondNumber = null;
-    calculator.numberHolder = '';
-    calculator.operatorHolder = '';
-    displayOne.innerText = ''
-    displayTwo.innerText = ''
-}
+calculator.numberBtnPressed()
+calculator.operatorBtnPressed()
+calculator.equalBtnPressed()
+calculator.clearBtnPressed()
