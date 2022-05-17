@@ -80,7 +80,7 @@ function operatorBtnPressed(event){
     if (calculator.operatorHolder === ''){
         displayOne.innerText = calculator.firstNumber
     } else if(calculator.secondNumber !== null) {
-        calculator.firstNumber = calculator.calculation(calculator.firstNumber, calculator.operatorHolder, calculator.secondNumber)
+        calculator.firstNumber = calculator.calculation()
         displayOne.innerText = calculator.firstNumber
         calculator.secondNumber = null
     }
@@ -91,7 +91,7 @@ function operatorBtnPressed(event){
 
 // when the use presses equal. You must show the result
 function equalBtnPressed() {
-    calculator.firstNumber = calculator.calculation(calculator.firstNumber, calculator.operatorHolder, calculator.secondNumber)
+    calculator.firstNumber = calculator.calculation()
     displayOne.innerText = calculator.firstNumber
     displayTwo.innerText = ''
     calculator.secondNumber = null
