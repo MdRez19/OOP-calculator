@@ -1,3 +1,30 @@
+class Calculator {
+    constructor() {
+       this.firstNumber = null
+       this.secondNumber = null;
+       this.numberHolder = ''
+       this.operatorHolder = ''
+       this.userInputNumber = ''
+       this.userInputOperator = ''
+    }
+
+    calculation(firstValue, operator, secondValue){
+        if (operator === '+'){
+            return firstValue + secondValue
+        } else if (operator === '-'){
+            return firstValue - secondValue
+        } else if (operator === '×'){
+            return firstValue * secondValue
+        } else if (operator === '/'){
+            return firstValue / secondValue
+        }
+    }
+
+}
+
+
+let calculator = new Calculator();
+
 // 1. find html elements
 const numberButtons = document.querySelectorAll(".number");
 const operationButtons = document.querySelectorAll(".operator");
@@ -7,103 +34,59 @@ const displayTwo = document.querySelector(".display-two");
 const clearButton = document.querySelector(".clear");
 
 
-class Calculator {
-    constructor() {
-       return
-    }
-
-}
-
-
-let calculator = new Calculator();
-
-
 
 //
 // // 2. add click event...
 for (let i = 0; i < numberButtons.length; i++) {
-    numberButtons[i].addEventListener("click", function (event){
-
-    });
+    numberButtons[i].addEventListener("click", numberBtnPressed)
 }
 
+for (let i = 0; i < operationButtons.length; i++) {
+    operationButtons[i].addEventListener("click", operatorBtnPressed)
+}
 
+equalsButton.addEventListener("click", equalBtnPressed);
+clearButton.addEventListener("click", clearBtnPressed);
 
-// for (let i = 0; i < operationButtons.length; i++) {
-//     operationButtons[i].addEventListener("click", calculator.operatorBtnPressed);
-// }
-// equalsButton.addEventListener("click", calculator.equalBtnPressed);
-// clearButton.addEventListener("click", calculator.clearBtnPressed);
+function numberBtnPressed(event){
+    calculator.userInputNumber = event.target.value
+    calculator.numberHolder += calculator.userInputNumber
+    displayTwo.innerText = calculator.numberHolder;
+    if (calculator.operatorHolder === ''){
+        calculator.firstNumber = Number(calculator.numberHolder)
+    } else {
+        calculator.secondNumber = Number(calculator.numberHolder)
+    }
+}
 
-// ********
-// Function
-// ********
-// function calculation(firstValue, operator, secondValue) {
-//     if (operator === '+'){
-//         return firstValue + secondValue
-//     } else if (operator === '-'){
-//         return firstValue - secondValue
-//     } else if (operator === '×'){
-//         return firstValue * secondValue
-//     } else if (operator === '/'){
-//         return firstValue / secondValue
-//     }
-// }
+function operatorBtnPressed(event){
+    calculator.userInputOperator = event.target.value;
+    if (calculator.operatorHolder === ''){
+        displayOne.innerText = calculator.firstNumber
+    } else if(calculator.secondNumber !== null) {
+        calculator.firstNumber = calculator.calculation(calculator.firstNumber, calculator.operatorHolder, calculator.secondNumber)
+        displayOne.innerText = calculator.firstNumber
+        calculator.secondNumber = null
+    }
+    calculator.operatorHolder = calculator.userInputOperator
+    displayTwo.innerText = ''
+    calculator.numberHolder = ''
+}
 
-//****************
-// calculator code
-//****************
-
-// put your variables here
-// let firstNumber = null;
-// let secondNumber = null;
-// let numberHolder = '';
-// let operatorHolder = '';
-
-
-
-
-// when the user presses a number button
-// function numberBtnPressed(event) {
-//     let userInputNumber = event.target.value;
-//     numberHolder += userInputNumber;
-//     displayTwo.innerText = numberHolder
-//     if (operatorHolder === ''){
-//         firstNumber = Number(numberHolder)
-//     } else {
-//         secondNumber = Number(numberHolder)
-//     }
-// }
-
-// when the user presses a operator button
-// function operatorBtnPressed(event) {
-//     let userInputOperator = event.target.value
-//     if (operatorHolder === ''){
-//         displayOne.innerText = firstNumber
-//     } else if(secondNumber !== null) {
-//         firstNumber = calculation(firstNumber, operatorHolder, secondNumber)
-//         displayOne.innerText = firstNumber
-//         secondNumber = null
-//     }
-//     operatorHolder = userInputOperator
-//     displayTwo.innerText = ''
-//     numberHolder = ''
-// }
-
-// when the use presss equal. You must show the result
-// function equalBtnPressed() {
-//     firstNumber = calculation(firstNumber, operatorHolder, secondNumber)
-//     displayOne.innerText = firstNumber
-//     displayTwo.innerText = ''
-//     secondNumber = null
-// }
+// when the use presses equal. You must show the result
+function equalBtnPressed() {
+    calculator.firstNumber = calculator.calculation(calculator.firstNumber, calculator.operatorHolder, calculator.secondNumber)
+    displayOne.innerText = calculator.firstNumber
+    displayTwo.innerText = ''
+    calculator.secondNumber = null
+}
 
 // clear values of all the variables...
-// function clearBtnPressed(){
-//     firstNumber = null;
-//     secondNumber = null;
-//     numberHolder = '';
-//     operatorHolder = '';
-//     displayOne.innerText = ''
-//     displayTwo.innerText = ''
-// }
+function clearBtnPressed(){
+    calculator.firstNumber = null;
+    calculator.secondNumber = null;
+    calculator.numberHolder = '';
+    calculator.operatorHolder = '';
+    displayOne.innerText = ''
+    displayTwo.innerText = ''
+}
