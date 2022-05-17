@@ -13,15 +13,15 @@ class Calculator {
     }
 
     subtract(){
-        return this.firstNumber + this.secondNumber
+        return this.firstNumber - this.secondNumber
     }
 
     multiply(){
-        return this.firstNumber + this.secondNumber
+        return this.firstNumber * this.secondNumber
     }
 
     divide(){
-        return this.firstNumber + this.secondNumber
+        return this.firstNumber / this.secondNumber
     }
 
     calculation(){
