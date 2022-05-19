@@ -87,6 +87,7 @@ class Calculator {
             return this.multiply()
         } else if (this.operatorHolder === '/'){
             return this.divide()
+
         }
     }
 
