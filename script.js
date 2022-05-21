@@ -45,8 +45,8 @@ class Calculator {
         }
     }
 
-    deleteButton() {
-        delateButton.addEventListener("click", () => {
+    deleteBtnPressed() {
+        deleteButton.addEventListener("click", () => {
             this.numberHolder = this.numberHolder.slice(0, -1);
             this.updateNumber();
         });
@@ -110,10 +110,10 @@ const equalsButton = document.querySelector(".equals");
 const displayOne = document.querySelector(".display-one");
 const displayTwo = document.querySelector(".display-two");
 const clearButton = document.querySelector(".clear");
-const delateButton = document.querySelector(".delate");
+const deleteButton = document.querySelector(".delete");
 
 calculator.numberBtnPressed();
 calculator.operatorBtnPressed();
 calculator.equalBtnPressed();
 calculator.clearBtnPressed();
-calculator.deleteButton();
+calculator.deleteBtnPressed();
