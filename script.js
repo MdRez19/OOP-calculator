@@ -1,15 +1,25 @@
 class Calculator {
-    constructor() {
+    constructor(name,age) {
+        // this.name = name
+        // this.age = age
         this.currentNumber = null;
         this.previousNumber = null;
         this.numberHolder = "";
         this.operatorHolder = "";
         this.userInputNumber = "";
         this.userInputOperator = "";
+        this.displayOne = document.querySelector(".display-one");
+        this.displayTwo = document.querySelector(".display-two");
+        this.numberBtnPressed();
+        this.operatorBtnPressed();
+        this.equalBtnPressed();
+        this.clearBtnPressed();
+        this.deleteBtnPressed();
     }
 
+
     updateNumber() {
-        displayTwo.innerText = this.numberHolder;
+        this.displayTwo.innerText = this.numberHolder;
         if (this.operatorHolder === "") {
             this.currentNumber = Number(this.numberHolder);
         } else {
@@ -18,6 +28,7 @@ class Calculator {
     }
 
     numberBtnPressed() {
+        const numberButtons = document.querySelectorAll(".number");
         for (let i = 0; i < numberButtons.length; i++) {
             numberButtons[i].addEventListener("click", (event) => {
                 this.userInputNumber = event.target.value;
@@ -28,24 +39,27 @@ class Calculator {
     }
 
     operatorBtnPressed() {
+        const operationButtons = document.querySelectorAll(".operator");
         for (let i = 0; i < operationButtons.length; i++) {
             operationButtons[i].addEventListener("click", (event) => {
+                if(this.currentNumber === null) return
                 this.userInputOperator = event.target.value;
                 if (this.operatorHolder === "") {
-                    displayOne.innerText = this.currentNumber;
+                    this.displayOne.innerText = this.currentNumber;
                 } else if (this.previousNumber !== null) {
                     this.currentNumber = this.calculation();
-                    displayOne.innerText = this.currentNumber;
+                    this.displayOne.innerText = this.currentNumber;
                     this.previousNumber = null;
                 }
                 this.operatorHolder = this.userInputOperator;
-                displayTwo.innerText = "";
+                this.displayTwo.innerText = "";
                 this.numberHolder = "";
             });
         }
     }
 
     deleteBtnPressed() {
+        const deleteButton = document.querySelector(".delete");
         deleteButton.addEventListener("click", () => {
             this.numberHolder = this.numberHolder.slice(0, -1);
             this.updateNumber();
@@ -53,22 +67,25 @@ class Calculator {
     }
 
     equalBtnPressed() {
+        const equalsButton = document.querySelector(".equals");
         equalsButton.addEventListener("click", () => {
+            if(this.currentNumber === null || this.operatorHolder === '') return
             this.currentNumber = this.calculation();
-            displayOne.innerText = this.currentNumber;
-            displayTwo.innerText = "";
+            this.displayOne.innerText = this.currentNumber;
+            this.displayTwo.innerText = "";
             this.previousNumber = null;
         });
     }
 
     clearBtnPressed() {
+        const clearButton = document.querySelector(".clear");
         clearButton.addEventListener("click", () => {
             this.currentNumber = null;
             this.previousNumber = null;
             this.numberHolder = "";
             this.operatorHolder = "";
-            displayOne.innerText = "";
-            displayTwo.innerText = "";
+            this.displayOne.innerText = "";
+            this.displayTwo.innerText = "";
         });
     }
 
@@ -99,21 +116,14 @@ class Calculator {
             return this.divide();
         }
     }
+
+    // user1(){
+    //     return `my name is ${this.name} and my age is ${this.age}`
+    // }
 }
 
-let calculator = new Calculator();
 
-// 1. find html elements
-const numberButtons = document.querySelectorAll(".number");
-const operationButtons = document.querySelectorAll(".operator");
-const equalsButton = document.querySelector(".equals");
-const displayOne = document.querySelector(".display-one");
-const displayTwo = document.querySelector(".display-two");
-const clearButton = document.querySelector(".clear");
-const deleteButton = document.querySelector(".delete");
 
-calculator.numberBtnPressed();
-calculator.operatorBtnPressed();
-calculator.equalBtnPressed();
-calculator.clearBtnPressed();
-calculator.deleteBtnPressed();
+let calculator = new Calculator('Rofy', 36);
+
+// console.log(calculator.user1())
