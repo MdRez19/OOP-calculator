@@ -14,6 +14,7 @@ class Calculator {
         this.operatorHolder = "";
         this.userInputNumber = "";
         this.userInputOperator = "";
+        this.equal = "";
 
         this.displayOne = document.querySelector(displayOneSelector);
         this.displayTwo = document.querySelector(displayTwoSelector);
@@ -43,6 +44,7 @@ class Calculator {
     numberBtnPressed() {
         for (let i = 0; i < this.numberButtons.length; i++) {
             this.numberButtons[i].addEventListener("click", (event) => {
+                if(this.equal !== '') return
                 this.userInputNumber = event.target.value;
                 this.numberHolder += this.userInputNumber;
                 this.updateNumber();
@@ -65,6 +67,7 @@ class Calculator {
                 this.operatorHolder = this.userInputOperator;
                 this.displayTwo.innerText = "";
                 this.numberHolder = "";
+                this.equal = ''
             });
         }
     }
@@ -77,13 +80,17 @@ class Calculator {
     }
 
     equalBtnPressed() {
-        this.equalsButton.addEventListener("click", () => {
+        this.equalsButton.addEventListener("click", (event) => {
             if(this.currentNumber === null || this.operatorHolder === '') return
+            this.equal = event.target.value;
             this.currentNumber = this.calculation();
             this.displayOne.innerText = this.currentNumber;
             this.displayTwo.innerText = "";
+            this.numberHolder = ''
+            this.operatorHolder = ''
             this.previousNumber = null;
         });
+
     }
 
     clearBtnPressed() {
