@@ -2,7 +2,11 @@
 <project version="4">
   <component name="ProjectModuleManager">
     <modules>
+<<<<<<< HEAD
       <module fileurl="file://$PROJECT_DIR$/.idea/OOP-calculator.iml" filepath="$PROJECT_DIR$/.idea/OOP-calculator.iml" />
+=======
+      <module fileurl="file://$PROJECT_DIR$/.idea/OOP_calculator.iml" filepath="$PROJECT_DIR$/.idea/OOP_calculator.iml" />
+>>>>>>> version_1.7
     </modules>
   </component>
 </project>

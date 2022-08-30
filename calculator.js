@@ -1,15 +1,29 @@
 class Calculator {
-    constructor(name,age) {
-        // this.name = name
-        // this.age = age
+    constructor(
+        displayOneSelector,
+        displayTwoSelector,
+        numberButtonsSelector,
+        operationButtonsSelector,
+        deleteButtonSelector,
+        clearButtonSelector,
+        equalsButtonSelector
+    ) {
         this.currentNumber = null;
         this.previousNumber = null;
         this.numberHolder = "";
         this.operatorHolder = "";
         this.userInputNumber = "";
         this.userInputOperator = "";
-        this.displayOne = document.querySelector(".display-one");
-        this.displayTwo = document.querySelector(".display-two");
+        this.equal = "";
+
+        this.displayOne = document.querySelector(displayOneSelector);
+        this.displayTwo = document.querySelector(displayTwoSelector);
+        this.numberButtons = document.querySelectorAll(numberButtonsSelector);
+        this.operationButtons = document.querySelectorAll(operationButtonsSelector);
+        this.deleteButton = document.querySelector(deleteButtonSelector);
+        this.clearButton = document.querySelector(clearButtonSelector);
+        this.equalsButton = document.querySelector(equalsButtonSelector);
+
         this.numberBtnPressed();
         this.operatorBtnPressed();
         this.equalBtnPressed();
@@ -28,9 +42,9 @@ class Calculator {
     }
 
     numberBtnPressed() {
-        const numberButtons = document.querySelectorAll(".number");
-        for (let i = 0; i < numberButtons.length; i++) {
-            numberButtons[i].addEventListener("click", (event) => {
+        for (let i = 0; i < this.numberButtons.length; i++) {
+            this.numberButtons[i].addEventListener("click", (event) => {
+                if(this.equal !== '') return
                 this.userInputNumber = event.target.value;
                 this.numberHolder += this.userInputNumber;
                 this.updateNumber();
@@ -39,9 +53,8 @@ class Calculator {
     }
 
     operatorBtnPressed() {
-        const operationButtons = document.querySelectorAll(".operator");
-        for (let i = 0; i < operationButtons.length; i++) {
-            operationButtons[i].addEventListener("click", (event) => {
+        for (let i = 0; i < this.operationButtons.length; i++) {
+            this.operationButtons[i].addEventListener("click", (event) => {
                 if(this.currentNumber === null) return
                 this.userInputOperator = event.target.value;
                 if (this.operatorHolder === "") {
@@ -54,32 +67,34 @@ class Calculator {
                 this.operatorHolder = this.userInputOperator;
                 this.displayTwo.innerText = "";
                 this.numberHolder = "";
+                this.equal = ''
             });
         }
     }
 
     deleteBtnPressed() {
-        const deleteButton = document.querySelector(".delete");
-        deleteButton.addEventListener("click", () => {
+        this.deleteButton.addEventListener("click", () => {
             this.numberHolder = this.numberHolder.slice(0, -1);
             this.updateNumber();
         });
     }
 
     equalBtnPressed() {
-        const equalsButton = document.querySelector(".equals");
-        equalsButton.addEventListener("click", () => {
+        this.equalsButton.addEventListener("click", (event) => {
             if(this.currentNumber === null || this.operatorHolder === '') return
+            this.equal = event.target.value;
             this.currentNumber = this.calculation();
             this.displayOne.innerText = this.currentNumber;
             this.displayTwo.innerText = "";
+            this.numberHolder = ''
+            this.operatorHolder = ''
             this.previousNumber = null;
         });
+
     }
 
     clearBtnPressed() {
-        const clearButton = document.querySelector(".clear");
-        clearButton.addEventListener("click", () => {
+        this.clearButton.addEventListener("click", () => {
             this.currentNumber = null;
             this.previousNumber = null;
             this.numberHolder = "";
@@ -116,14 +131,5 @@ class Calculator {
             return this.divide();
         }
     }
-
-    // user1(){
-    //     return `my name is ${this.name} and my age is ${this.age}`
-    // }
 }
 
-
-
-let calculator = new Calculator('Rofy', 36);
-
-// console.log(calculator.user1())
